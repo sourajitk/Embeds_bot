@@ -1,4 +1,9 @@
+"""
+Embeds here we come!
+"""
 import os
+import logging
+import re
 from dotenv import load_dotenv
 from telegram.ext import (
     Updater,
@@ -8,8 +13,6 @@ from telegram.ext import (
     CallbackContext,
 )
 from telegram import Update
-import logging
-import re
 
 load_dotenv()
 logging.basicConfig(
@@ -57,7 +60,7 @@ def edit_text(text):
     return new_url
 
 
-def text_handler(update, context):
+def text_handler(update, message):
     """
     The primary handler that does all the replacement action through
     the API.
