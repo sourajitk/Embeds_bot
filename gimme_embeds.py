@@ -40,7 +40,9 @@ def edit_text(text):
 
     # Setup conditionals.
     # For Twitter
-    if re.search("(?P<url>twitter.com[^\s]+)", text, re.IGNORECASE):
+    if re.search("(?P<url>twitter.com[^\s]+)", text, re.IGNORECASE) and not re.search(
+        "(?P<url>xtwitter.com[^\s]+)", text, re.IGNORECASE
+    ):
         # Isolate the Twitter URL.
         twitter_url = str(
             re.search("(?P<url>twitter.com[^\s]+)", text, re.IGNORECASE).group("url")
@@ -50,7 +52,9 @@ def edit_text(text):
         new_url = new_url.split("?")[0] # Remove trackers
 
     # For TikTok
-    elif re.search("(?P<url>tiktok.com[^\s]+)", text, re.IGNORECASE):
+    elif re.search("(?P<url>tiktok.com[^\s]+)", text, re.IGNORECASE) and not re.search(
+        "(?P<url>xtiktok.com[^\s]+)", text, re.IGNORECASE
+    ):
         # Isolate the tiktok URL.
         tiktok_url = str(
             re.search("(?P<url>tiktok[^\s]+)", text, re.IGNORECASE).group("url")
