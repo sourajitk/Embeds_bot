@@ -23,8 +23,7 @@ def text_handler(update, context):
     the API.
     """
     # Declare our list of to-be-replaced and new URLs.
-    list_of_urls = ["https://twitter.com/", "https://www.tiktok.com/"]
-    list_of_new_urls = ["https://vxtwitter.com/", "https://www.vxtiktok.com/"]
+    list_of_urls = ["twitter.com/", "tiktok.com/"]
 
     # Use variables derived from custom API methods.
     message = update.message.text
@@ -33,13 +32,13 @@ def text_handler(update, context):
     # Setup conditionals for TikTok and Twitter.
     # For Twitter
     if list_of_urls[0] in message:
-        url_id_0 = message.split(list_of_urls[0])
-        reply(list_of_new_urls[0]+url_id_0[1])
+        new_url = message.replace("twitter", "vxtwitter")
+        reply(new_url)
     
     # For TikTok
     elif list_of_urls[1] in message:
-        url_id_1 = message.split(list_of_urls[1])
-        reply(list_of_new_urls[1]+url_id_1[1])
+        new_url = message.replace("tiktok", "vxtiktok")
+        reply(new_url)
 
 start_handler = CommandHandler("start", start)
 dispatcher.add_handler(start_handler)
