@@ -21,12 +21,12 @@ def text_handler(update, context):
 
     # Setup conditionals for TikTok and Twitter.
     # For Twitter
-    if message.startswith(list_of_urls[0]):
+    if list_of_urls[0] in message:
         url_id_0 = message.split(list_of_urls[0])
         reply(list_of_new_urls[0]+url_id_0[1])
     
     # For TikTok
-    elif message.startswith(list_of_urls[1]):
+    elif list_of_urls[1] in message:
         url_id_1 = message.split(list_of_urls[1])
         reply(list_of_new_urls[1]+url_id_1[1])
 
