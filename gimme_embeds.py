@@ -29,12 +29,13 @@ def start(update: Update, context: CallbackContext):
 
 def edit_text(text):
     """
-    This function edits the text of the message.
+    This function edits the text of the message, by replacing some 
+    website URLs with their vx counterparts that support embeds.
     """
     # Declare our list of to-be-replaced and new URLs.
     list_of_urls = ["twitter.com/", "tiktok.com/"]
 
-    # Setup conditionals for TikTok and Twitter.
+    # Setup conditionals.
     # For Twitter
     if list_of_urls[0] in text:
         new_url = text.replace("twitter", "vxtwitter")
@@ -54,6 +55,11 @@ def text_handler(update, context):
     message = update.message.text
     reply = update.message.reply_text
 
+    """
+    Check if the text contains an hyperlink.
+    If it does, extract the URL and pass it to the edit_text function.
+    If it doesn't, send the entire text to edit_text.
+    """
     if update.message.entities[0].url is None:
         reply(edit_text(message))
     else:
