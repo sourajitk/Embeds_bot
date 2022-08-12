@@ -1,6 +1,10 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from telegram import Update
 import config # Contains our API key.
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                     level=logging.DEBUG)
 
 # Use variables derived from custom API methods.
 updater = Updater(token=config.BOT_TOKEN, use_context=True)
