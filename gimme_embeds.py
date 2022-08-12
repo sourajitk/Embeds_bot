@@ -41,9 +41,9 @@ def text_handler(update, context):
         url_id_1 = message.split(list_of_urls[1])
         reply(list_of_new_urls[1]+url_id_1[1])
 
-message_handler = MessageHandler(Filters.text, text_handler)
-dispatcher.add_handler(message_handler)
 start_handler = CommandHandler("start", start)
 dispatcher.add_handler(start_handler)
+message_handler = MessageHandler(Filters.text, text_handler)
+dispatcher.add_handler(message_handler)
 
 updater.start_polling()
