@@ -1,14 +1,24 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+import os
+from dotenv import load_dotenv
+from telegram.ext import (
+    Updater,
+    CommandHandler,
+    MessageHandler,
+    Filters,
+    CallbackContext,
+)
 from telegram import Update
-import config # Contains our API key.
 import logging
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                     level=logging.DEBUG)
+load_dotenv()
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.DEBUG
+)
 
 # Use variables derived from custom API methods.
-updater = Updater(token=config.BOT_TOKEN, use_context=True)
+updater = Updater(token=os.getenv("BOT_TOKEN"), use_context=True)
 dispatcher = updater.dispatcher
+
 
 def start(update: Update, context: CallbackContext):
     """
@@ -16,6 +26,7 @@ def start(update: Update, context: CallbackContext):
     bot is alive and ready to go.
     """
     context.bot.send_message(chat_id=update.effective_chat.id, text="Hello")
+
 
 def text_handler(update, context):
     """
@@ -34,11 +45,12 @@ def text_handler(update, context):
     if list_of_urls[0] in message:
         new_url = message.replace("twitter", "vxtwitter")
         reply(new_url)
-    
+
     # For TikTok
     elif list_of_urls[1] in message:
         new_url = message.replace("tiktok", "vxtiktok")
         reply(new_url)
+
 
 start_handler = CommandHandler("start", start)
 dispatcher.add_handler(start_handler)
