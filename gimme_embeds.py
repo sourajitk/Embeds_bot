@@ -44,6 +44,7 @@ def edit_text(text):
         )
         insensitive_twitter = re.compile(re.escape("twitter.com"), re.IGNORECASE)
         new_url = insensitive_twitter.sub("vxtwitter.com", twitter_url)
+        new_url = new_url.split("?")[0] # Remove trackers
 
     # For TikTok
     elif re.search("(?P<url>tiktok.com[^\s]+)", text, re.IGNORECASE):
