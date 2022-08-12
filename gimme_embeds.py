@@ -40,6 +40,7 @@ def edit_text(text):
     # For Twitter
     if list_of_urls[0] in text:
         new_url = text.replace("twitter", "vxtwitter")
+        new_url = new_url.split("?")[0]
     # For TikTok
     elif list_of_urls[1] in text:
         new_url = text.replace("tiktok", "vxtiktok")
