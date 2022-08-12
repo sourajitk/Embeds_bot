@@ -9,6 +9,7 @@ from telegram.ext import (
 )
 from telegram import Update
 import logging
+import re
 
 load_dotenv()
 logging.basicConfig(
@@ -33,17 +34,25 @@ def edit_text(text):
     This function edits the text of the message, by replacing some
     website URLs with their vx counterparts that support embeds.
     """
-    # Declare our list of to-be-replaced and new URLs.
-    list_of_urls = ["twitter.com/", "tiktok.com/"]
 
     # Setup conditionals.
     # For Twitter
-    if list_of_urls[0] in text:
-        new_url = text.replace("twitter", "vxtwitter")
-        new_url = new_url.split("?")[0]
+    if re.search("(?P<url>twitter.com[^\s]+)", text, re.IGNORECASE):
+        # Isolate the Twitter URL.
+        twitter_url = str(
+            re.search("(?P<url>twitter.com[^\s]+)", text, re.IGNORECASE).group("url")
+        )
+        insensitive_twitter = re.compile(re.escape("twitter.com"), re.IGNORECASE)
+        new_url = insensitive_twitter.sub("vxtwitter.com", twitter_url)
+
     # For TikTok
-    elif list_of_urls[1] in text:
-        new_url = text.replace("tiktok", "vxtiktok")
+    elif re.search("(?P<url>tiktok.com[^\s]+)", text, re.IGNORECASE):
+        # Isolate the tiktok URL.
+        tiktok_url = str(
+            re.search("(?P<url>tiktok[^\s]+)", text, re.IGNORECASE).group("url")
+        )
+        insensitive_tiktok = re.compile(re.escape("tiktok.com"), re.IGNORECASE)
+        new_url = insensitive_tiktok.sub("vxtiktok.com", tiktok_url)
     return new_url
 
 
