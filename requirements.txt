@@ -1,0 +1,3 @@
+config
+dotenv
+python-telegram-bot
