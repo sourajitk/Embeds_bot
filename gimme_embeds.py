@@ -27,9 +27,10 @@ def start(update: Update, context: CallbackContext):
     """
     context.bot.send_message(chat_id=update.effective_chat.id, text="Hello")
 
+
 def edit_text(text):
     """
-    This function edits the text of the message, by replacing some 
+    This function edits the text of the message, by replacing some
     website URLs with their vx counterparts that support embeds.
     """
     # Declare our list of to-be-replaced and new URLs.
