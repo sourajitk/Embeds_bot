@@ -6,6 +6,13 @@ import config # Contains our API key.
 updater = Updater(token=config.BOT_TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
+def start(update: Update, context: CallbackContext):
+    """
+    This function sets up the /start action to let the user know the
+    bot is alive and ready to go.
+    """
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hello")
+
 def text_handler(update, context):
     """
     The primary handler that does all the replacement action through
