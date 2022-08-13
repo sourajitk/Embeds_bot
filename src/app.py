@@ -26,6 +26,10 @@ def main():
     dispatcher.add_handler(start_handler)
     message_handler = MessageHandler(Filters.text, ge.text_handler)
     dispatcher.add_handler(message_handler)
+    # Handler to stop the bot
+    dispatcher.add_handler(
+        CommandHandler("r", restart, filters=Filters.user(username="@CompassNeedle, @zzkW35"))
+    )
 
     updater.start_polling()
 

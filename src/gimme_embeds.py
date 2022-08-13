@@ -2,6 +2,7 @@
 Embeds here we come!
 """
 import re
+import sys
 
 
 class GimmeEmbeds:
@@ -65,3 +66,15 @@ class GimmeEmbeds:
         else:
             url = update.message.entities[0].url
             reply(self.edit_text(url))
+
+    def stop_and_restart():
+        """
+        Gracefully stop the Updater and replace the current 
+        process with a new one
+        """
+        updater.stop()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+    
+    def restart(update, context):
+        update.message.reply_text("Bot is restarting...")
+        Thread(target=stop_and_restart).start()
