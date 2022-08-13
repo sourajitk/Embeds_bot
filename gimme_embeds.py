@@ -60,7 +60,7 @@ def edit_text(text):
     return new_url
 
 
-def text_handler(update, message):
+def text_handler(update, context: CallbackContext):
     """
     The primary handler that does all the replacement action through
     the API.
