@@ -4,7 +4,9 @@ Embeds here we come!
 import os
 import logging
 import re
+import sys
 from dotenv import load_dotenv
+from threading import Thread
 from telegram.ext import (
     Updater,
     CommandHandler,
@@ -101,11 +103,29 @@ def text_handler(update, context):
             reply(reply_url)
 
 
+def stop_and_restart():
+    """
+    Gracefully stop the Updater and replace the current process 
+    with a new one
+    """
+    updater.stop()
+    os.execl(sys.executable, sys.executable, *sys.argv)
+
+
+def restart(update, context):
+    update.message.reply_text("Bot is restarting...")
+    Thread(target=stop_and_restart).start()
+
+
 start_handler = CommandHandler("start", start)
 dispatcher.add_handler(start_handler)
 message_handler = MessageHandler(
     (Filters.entity("url") | Filters.entity("text_link")), text_handler
 )
 dispatcher.add_handler(message_handler)
+# Handler to stop the bot
+dispatcher.add_handler(
+    CommandHandler("r", restart, filters=Filters.user(user_id=(415397712, 177699182)))
+)
 
 updater.start_polling()
