@@ -40,24 +40,26 @@ def edit_text(text):
 
     # Setup conditionals.
     # For Twitter
-    if re.search("(?P<url>twitter.com[^\s]+)", text, re.IGNORECASE) and not re.search(
-        "(?P<url>xtwitter.com[^\s]+)", text, re.IGNORECASE
-    ):
+    if re.search(
+        "(?P<url>twitter.com/(.*?)/[^\s]+)", text, re.IGNORECASE
+    ) and not re.search("(?P<url>xtwitter.com[^\s]+)", text, re.IGNORECASE):
         # Isolate the Twitter URL.
         twitter_url = str(
-            re.search("(?P<url>twitter.com[^\s]+)", text, re.IGNORECASE).group("url")
+            re.search("(?P<url>(.*?)twitter.com[^\s]+)", text, re.IGNORECASE).group(
+                "url"
+            )
         )
         insensitive_twitter = re.compile(re.escape("twitter.com"), re.IGNORECASE)
         new_url = insensitive_twitter.sub("vxtwitter.com", twitter_url)
-        new_url = new_url.split("?")[0] # Remove trackers
+        new_url = new_url.split("?")[0]  # Remove trackers
 
     # For TikTok
-    elif re.search("(?P<url>tiktok.com[^\s]+)", text, re.IGNORECASE) and not re.search(
-        "(?P<url>xtiktok.com[^\s]+)", text, re.IGNORECASE
-    ):
+    elif re.search(
+        "(?P<url>tiktok.com/t/[^\s]+)", text, re.IGNORECASE
+    ) and not re.search("(?P<url>xtiktok.com[^\s]+)", text, re.IGNORECASE):
         # Isolate the tiktok URL.
         tiktok_url = str(
-            re.search("(?P<url>tiktok[^\s]+)", text, re.IGNORECASE).group("url")
+            re.search("(?P<url>(.*?)tiktok[^\s]+)", text, re.IGNORECASE).group("url")
         )
         insensitive_tiktok = re.compile(re.escape("tiktok.com"), re.IGNORECASE)
         new_url = insensitive_tiktok.sub("vxtiktok.com", tiktok_url)
