@@ -58,7 +58,7 @@ def edit_text(text):
 
     # For TikTok
     elif re.search(
-        r"(?P<url>tiktok.com/t/[^\s]+)", text, re.IGNORECASE
+        r"(?P<url>tiktok.com/[^\s]+)", text, re.IGNORECASE
     ) and not re.search(r"(?P<url>xtiktok.com[^\s]+)", text, re.IGNORECASE):
         # Isolate the tiktok URL.
         tiktok_url = str(
