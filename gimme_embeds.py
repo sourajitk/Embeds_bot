@@ -36,6 +36,8 @@ def edit_text(text):
     website URLs with their *x counterparts that support embeds.
     """
 
+    new_url = None
+
     # Setup conditionals.
     # For Twitter
     if re.search(
@@ -61,6 +63,7 @@ def edit_text(text):
         )
         insensitive_tiktok = re.compile(re.escape("tiktok.com"), re.IGNORECASE)
         new_url = insensitive_tiktok.sub("vxtiktok.com", tiktok_url)
+
     return new_url
 
 
@@ -74,16 +77,20 @@ def text_handler(update, context): # pylint: disable=unused-argument
     message = update.message.text
     reply = update.message.reply_text
 
-    """
-    Check if the text contains an hyperlink.
-    If it does, extract the URL and pass it to the edit_text function.
-    If it doesn't, send the entire text to edit_text.
-    """
-    if update.message.entities[0].url is None:
-        reply(edit_text(message))
+    # Check if the text contains an hyperlink and if isn't None.
+    # If it contains an hyperlink, extract the URL and pass it to edit_text.
+    # If it doesn't, send the entire text to edit_text.
+
+    hyperlink_url = update.message.entities[0].url
+
+    if hyperlink_url is None:
+        reply_url = edit_text(message)
+        if reply_url is not None:
+            reply(reply_url)
     else:
-        url = update.message.entities[0].url
-        reply(edit_text(url))
+        reply_url = edit_text(hyperlink_url)
+        if reply_url is not None:
+            reply(reply_url)
 
 
 start_handler = CommandHandler("start", start)
