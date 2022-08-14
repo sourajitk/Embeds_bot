@@ -88,7 +88,9 @@ def text_handler(update, context): # pylint: disable=unused-argument
 
 start_handler = CommandHandler("start", start)
 dispatcher.add_handler(start_handler)
-message_handler = MessageHandler(Filters.text, text_handler)
+message_handler = MessageHandler(
+    (Filters.entity("url") | Filters.entity("text_link")), text_handler
+)
 dispatcher.add_handler(message_handler)
 
 updater.start_polling()
