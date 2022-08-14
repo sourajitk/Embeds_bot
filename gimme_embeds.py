@@ -30,7 +30,17 @@ def start(update, context):
     This function sets up the /start action to let the user know the
     bot is alive and ready to go.
     """
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Hello")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hey there, I am alive! \
+I convert social media links that sometimes fail to show an embed with the message body.")
+
+
+def source(update, context):
+    """
+    This function sends a message to the chat that wants the source
+    for the bot.
+    """
+    context.bot.send_message(chat_id=update.effective_chat.id, text="This bot is brought to you by \
+the citizens of Big Chungus LLC.\n\nSource: https://github.com/sourajitk/Embeds_bot")
 
 
 def edit_text(text):
@@ -118,8 +128,13 @@ def restart(update, context): # pylint: disable=unused-argument
     Thread(target=stop_and_restart).start()
 
 
+# Handle the /start command.
 start_handler = CommandHandler("start", start)
 dispatcher.add_handler(start_handler)
+# Handle the /source command.
+source_handler = CommandHandler("source", source)
+dispatcher.add_handler(source_handler)
+# Main handler for links and hyperlinks.
 message_handler = MessageHandler(
     (Filters.entity("url") | Filters.entity("text_link")), text_handler
 )
