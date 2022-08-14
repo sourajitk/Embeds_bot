@@ -10,9 +10,7 @@ from telegram.ext import (
     CommandHandler,
     MessageHandler,
     Filters,
-    CallbackContext,
 )
-from telegram import Update
 
 load_dotenv()
 logging.basicConfig(
@@ -24,7 +22,7 @@ updater = Updater(token=os.getenv("BOT_TOKEN"), use_context=True)
 dispatcher = updater.dispatcher
 
 
-def start(update: Update, context: CallbackContext):
+def start(update, context):
     """
     This function sets up the /start action to let the user know the
     bot is alive and ready to go.
@@ -64,7 +62,7 @@ def edit_text(text):
     return new_url
 
 
-def text_handler(update, context: CallbackContext):
+def text_handler(update, context): # pylint: disable=unused-argument
     """
     The primary handler that does all the replacement action through
     the API.
