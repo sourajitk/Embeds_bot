@@ -117,9 +117,17 @@ def stop_and_restart():
 
 
 def restart(update, context): # pylint: disable=unused-argument
-    """Restart the bot."""
-    update.message.reply_text("Bot is restarting...")
-    Thread(target=stop_and_restart).start()
+    """
+    Allows whitelisted user_ids to restart the bot.
+    """
+    user_ids = [415397712, 177699182]
+    filters = update.effective_user.id
+
+    if filters in user_ids:
+        update.message.reply_text("Bot is restarting...")
+        Thread(target=stop_and_restart).start()
+    else:
+        update.message.reply_text("Sorry, restarting the bot is restricted to its owners.")
 
 
 # Handle the /start command.
@@ -134,8 +142,6 @@ message_handler = MessageHandler(
 )
 dispatcher.add_handler(message_handler)
 # Handler to stop the bot
-dispatcher.add_handler(
-    CommandHandler("r", restart, filters=Filters.user(user_id=(415397712, 177699182)))
-)
+dispatcher.add_handler(CommandHandler("r", restart))
 
 updater.start_polling()
