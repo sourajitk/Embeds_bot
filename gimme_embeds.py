@@ -5,8 +5,8 @@ import os
 import logging
 import re
 import sys
-from dotenv import load_dotenv
 from threading import Thread
+from dotenv import load_dotenv
 from telegram.ext import (
     Updater,
     CommandHandler,
@@ -105,14 +105,15 @@ def text_handler(update, context):
 
 def stop_and_restart():
     """
-    Gracefully stop the Updater and replace the current process 
-    with a new one
+    Gracefully stop the Updater and replace the
+    current process with a new one.
     """
     updater.stop()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
-def restart(update, context):
+def restart(update, context): # pylint: disable=unused-argument
+    """Restart the bot."""
     update.message.reply_text("Bot is restarting...")
     Thread(target=stop_and_restart).start()
 
