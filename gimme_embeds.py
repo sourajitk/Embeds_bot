@@ -13,7 +13,6 @@ from telegram.ext import (
     MessageHandler,
     Filters,
 )
-from telegram import ChatAction
 
 load_dotenv()
 logging.basicConfig(
@@ -82,16 +81,11 @@ def edit_text(text):
     return new_url
 
 
-def text_handler(update, context):
+def text_handler(update, context): # pylint: disable=unused-argument
     """
     The primary handler that does all the replacement action through
     the API.
     """
-
-    # Typing...
-    context.bot.send_chat_action(
-        chat_id=update.effective_chat.id, action=ChatAction.TYPING
-    )
 
     # Use variables derived from custom API methods.
     message = update.message.text
