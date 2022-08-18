@@ -29,8 +29,11 @@ def start(update, context):
     This function sets up the /start action to let the user know the
     bot is alive and ready to go.
     """
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Hey there, I am alive! \
-I convert social media links that sometimes fail to show an embed with the message body.")
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Hey there, I am alive! \
+I convert social media links that sometimes fail to show an embed with the message body.",
+    )
 
 
 def source(update, context):
@@ -38,8 +41,11 @@ def source(update, context):
     This function sends a message to the chat that wants the source
     for the bot.
     """
-    context.bot.send_message(chat_id=update.effective_chat.id, text="This bot is brought to you by \
-the citizens of Big Chungus LLC.\n\nSource: https://github.com/sourajitk/Embeds_bot")
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="This bot is brought to you by \
+the citizens of Big Chungus LLC.\n\nSource: https://github.com/sourajitk/Embeds_bot",
+    )
 
 
 def edit_text(text):
@@ -82,7 +88,7 @@ def edit_text(text):
     return new_url
 
 
-def text_handler(update, context): # pylint: disable=unused-argument
+def text_handler(update, context):  # pylint: disable=unused-argument
     """
     The primary handler that does all the replacement action through
     the API.
@@ -117,7 +123,7 @@ def stop_and_restart():
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
-def restart(update, context): # pylint: disable=unused-argument
+def restart(update, context):  # pylint: disable=unused-argument
     """
     Allows whitelisted user_ids to restart the bot.
     """
@@ -128,7 +134,9 @@ def restart(update, context): # pylint: disable=unused-argument
         update.message.reply_text("Bot is restarting...")
         Thread(target=stop_and_restart).start()
     else:
-        update.message.reply_text("Sorry, restarting the bot is restricted to its owners.")
+        update.message.reply_text(
+            "Sorry, restarting the bot is restricted to its owners."
+        )
 
 
 # Handle the /start command.
