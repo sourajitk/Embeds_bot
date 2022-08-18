@@ -52,9 +52,10 @@ def edit_text(text):
 
     # Setup conditionals.
     # For Twitter
-    if re.search(
-        r"(?P<url>twitter.com/(.*?)/[^\s]+)", text, re.IGNORECASE
-    ) and not re.search(r"(?P<url>xtwitter.com[^\s]+)", text, re.IGNORECASE):
+    if re.search(r"(?P<url>twitter.com/(.*?)/[^\s]+)", text, re.IGNORECASE) and not (
+        re.search(r"(?P<url>xtwitter.com[^\s]+)", text, re.IGNORECASE)
+        or re.search(r"(?P<url>twitter.com/i/events/[^\s]+)", text, re.IGNORECASE)
+    ):
         # Isolate the Twitter URL.
         twitter_url = str(
             re.search(
