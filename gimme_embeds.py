@@ -85,6 +85,20 @@ def edit_text(text):
         insensitive_tiktok = re.compile(re.escape("tiktok.com"), re.IGNORECASE)
         new_url = insensitive_tiktok.sub("vxtiktok.com", tiktok_url)
 
+    # For Instagram
+    elif re.search(
+        r"(?P<url>instagram.com/[^\s]+)", text, re.IGNORECASE
+    ) and not re.search(r"(?P<url>ddinstagram.com[^\s]+)", text, re.IGNORECASE):
+        # Isolate the Instagram URL.
+        instagram_url = str(
+            re.search(
+                r"(?P<url>([^\s]*?)instagram[^\s]+)", text, re.IGNORECASE
+            ).group("url")
+        )
+        insensitive_instagram = re.compile(re.escape("instagram.com"), re.IGNORECASE)
+        new_url = insensitive_instagram.sub("ddinstagram.com", instagram_url)
+        new_url = new_url.split("/?")[0]
+
     return new_url
 
 
