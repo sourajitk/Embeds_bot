@@ -20,7 +20,7 @@ dispatcher = updater.dispatcher
 
 
 def main():
-    """ Setup and run the bot."""
+    """Setup and run the bot."""
     # Handle the /start command.
     start_handler = CommandHandler("start", ge.start)
     dispatcher.add_handler(start_handler)
@@ -34,6 +34,9 @@ def main():
     dispatcher.add_handler(message_handler)
     # Handler to stop the bot
     dispatcher.add_handler(CommandHandler("r", ge.restart))
+
+    # Handler to filter and embed a website
+    dispatcher.add_handler(CommandHandler("embed", ge.filter_website))
 
     updater.start_polling()
 
