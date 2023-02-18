@@ -28,7 +28,7 @@ class GimmeEmbeds:
         redis_db = db.create_db(chat_id)
         # Convert the database to a dictionary to store it locally, so the bot doesn't
         # have to query the database every time users send a link.
-        self.filter_db = {
+        self.filter_db = {  # pylint: disable=attribute-defined-outside-init
             k.decode("utf-8"): v.decode("utf-8") for k, v in redis_db.items()
         }
 
@@ -56,7 +56,9 @@ class GimmeEmbeds:
         try:
             database = self.filter_db
         except AttributeError:
-            self.filter_db = db.get_db(chat_id)
+            self.filter_db = db.get_db( # pylint: disable=attribute-defined-outside-init
+                chat_id
+            )
             database = self.filter_db
 
         # Setup conditionals.
@@ -193,4 +195,6 @@ class GimmeEmbeds:
             )
             db.edit_db(chat_id, filtered_website, value)
             # Update the local dictionary from the database.
-            self.filter_db = db.get_db(chat_id)
+            self.filter_db = db.get_db( # pylint: disable=attribute-defined-outside-init
+                chat_id
+            )

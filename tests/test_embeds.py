@@ -28,13 +28,29 @@ def test_source():
 def test_edit_text_twitter():
     """Test the edit_text function for Twitter."""
     assert (
-        ge.edit_text("twitter.com/prince/status/1380000000000000000", 000000000)
+        ge.edit_text(
+            "twitter.com/prince/status/1380000000000000000",
+            mocked_update.effective_chat.id,
+        )
         == "vxtwitter.com/prince/status/1380000000000000000"
     )  # pylint: disable=line-too-long
-    assert ge.edit_text("twitter.com/i/spaces/1380000000000000000", 000000000) is None
-    assert ge.edit_text("twitter.com/i/events/1380000000000000000", 000000000) is None
     assert (
-        ge.edit_text("vxtwitter.com/prince/status/1380000000000000000", 000000000)
+        ge.edit_text(
+            "twitter.com/i/spaces/1380000000000000000", mocked_update.effective_chat.id
+        )
+        is None
+    )
+    assert (
+        ge.edit_text(
+            "twitter.com/i/events/1380000000000000000", mocked_update.effective_chat.id
+        )
+        is None
+    )
+    assert (
+        ge.edit_text(
+            "vxtwitter.com/prince/status/1380000000000000000",
+            mocked_update.effective_chat.id,
+        )
         is None
     )
 
@@ -42,11 +58,17 @@ def test_edit_text_twitter():
 def test_edit_text_tiktok():
     """Test the edit_text function for TikTok."""
     assert (
-        ge.edit_text("tiktok.com/@prince/video/6900000000000000000", 000000000)
+        ge.edit_text(
+            "tiktok.com/@prince/video/6900000000000000000",
+            mocked_update.effective_chat.id,
+        )
         == "vxtiktok.com/@prince/video/6900000000000000000"
     )  # pylint: disable=line-too-long
     assert (
-        ge.edit_text("vxtiktok.com/@prince/video/6900000000000000000", 000000000)
+        ge.edit_text(
+            "vxtiktok.com/@prince/video/6900000000000000000",
+            mocked_update.effective_chat.id,
+        )
         is None
     )
 
@@ -54,22 +76,29 @@ def test_edit_text_tiktok():
 def test_edit_text_instagram():
     """Test the edit_text function for Instagram."""
     assert (
-        ge.edit_text("instagram.com/p/CO0000000000000000000/", 000000000)
+        ge.edit_text(
+            "instagram.com/p/CO0000000000000000000/", mocked_update.effective_chat.id
+        )
         == "ddinstagram.com/p/CO0000000000000000000/"
     )  # pylint: disable=line-too-long
-    assert ge.edit_text("ddinstagram.com/p/CO0000000000000000000/", 000000000) is None
+    assert (
+        ge.edit_text(
+            "ddinstagram.com/p/CO0000000000000000000/", mocked_update.effective_chat.id
+        )
+        is None
+    )
 
 
 def test_edit_text_invalid():
     """Test the edit_text function for invalid URLs."""
-    assert ge.edit_text("invalid_url", 000000000) is None
+    assert ge.edit_text("invalid_url", mocked_update.effective_chat.id) is None
 
 
 def test_edit_text_empty():
     """Test the edit_text function for empty string."""
-    assert ge.edit_text("", 000000000) is None
+    assert ge.edit_text("", mocked_update.effective_chat.id) is None
 
 
 def test_edit_text_no_url():
     """Test the edit_text function for no URL."""
-    assert ge.edit_text("test message", 000000000) is None
+    assert ge.edit_text("test message", mocked_update.effective_chat.id) is None
