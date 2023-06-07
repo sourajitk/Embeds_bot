@@ -1,5 +1,6 @@
 """Test the embeds bot."""
 from unittest.mock import MagicMock, Mock
+import fakeredis
 
 from embeds_bot.gimme_embeds import GimmeEmbeds
 
@@ -9,8 +10,16 @@ mocked_update.message.text = "test message"
 mocked_update.message.entities[0].url = "twitter.com"
 
 mocked_context = Mock()
-
-ge = GimmeEmbeds()
+# mock a redis client
+mock_redis = fakeredis.FakeStrictRedis(version=6)
+mock_redis.get_db = MagicMock(return_value={
+    "twitter": 1,
+    "instagram": 0,
+    "tiktok": 1
+})
+mock_redis.create_db = MagicMock()
+mock_redis.edit_db = MagicMock()
+ge = GimmeEmbeds(db=mock_redis)
 
 
 def test_start():
@@ -63,7 +72,7 @@ def test_edit_text_tiktok():
             mocked_update.effective_chat.id,
         )
         == "vxtiktok.com/@prince/video/6900000000000000000"
-    )  # pylint: disable=line-too-long
+    )
     assert (
         ge.edit_text(
             "vxtiktok.com/@prince/video/6900000000000000000",
@@ -80,7 +89,7 @@ def test_edit_text_instagram():
             "instagram.com/p/CO0000000000000000000/", mocked_update.effective_chat.id
         )
         == "ddinstagram.com/p/CO0000000000000000000/"
-    )  # pylint: disable=line-too-long
+    )
     assert (
         ge.edit_text(
             "ddinstagram.com/p/CO0000000000000000000/", mocked_update.effective_chat.id

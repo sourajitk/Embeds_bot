@@ -4,3 +4,14 @@ services:
     build: .
     env_file:
       - .env
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD} # remove if password not needed
+    volumes:
+      - cache:/data
+volumes:
+  cache:
+    driver: local

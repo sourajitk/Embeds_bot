@@ -4,13 +4,11 @@ import re
 import sys
 from threading import Thread
 
-from embeds_bot.gimme_db import GimmeDB
-
-db = GimmeDB()
-
 
 class GimmeEmbeds:
     """Class to handle the bot's actions."""
+    def __init__(self, db): # pylint: disable=invalid-name
+        self.db = db # pylint: disable=invalid-name
 
     def start(self, update, context):
         """
@@ -25,7 +23,7 @@ class GimmeEmbeds:
             + "an embed with the message body.",
         )
         # Create a database for the chat.
-        redis_db = db.create_db(chat_id)
+        redis_db = self.db.create_db(chat_id)
         # Convert the database to a dictionary to store it locally, so the bot doesn't
         # have to query the database every time users send a link.
         self.filter_db = {  # pylint: disable=attribute-defined-outside-init
@@ -56,7 +54,7 @@ class GimmeEmbeds:
         try:
             database = self.filter_db
         except AttributeError:
-            self.filter_db = db.get_db( # pylint: disable=attribute-defined-outside-init
+            self.filter_db = self.db.get_db( # pylint: disable=attribute-defined-outside-init
                 chat_id
             )
             database = self.filter_db
@@ -193,8 +191,8 @@ class GimmeEmbeds:
             update.message.reply_text(
                 filtered_website_name + " embeds are: " + message[2]
             )
-            db.edit_db(chat_id, filtered_website, value)
+            self.db.edit_db(chat_id, filtered_website, value)
             # Update the local dictionary from the database.
-            self.filter_db = db.get_db( # pylint: disable=attribute-defined-outside-init
+            self.filter_db = self.db.get_db( # pylint: disable=attribute-defined-outside-init
                 chat_id
             )
