@@ -83,6 +83,19 @@ class GimmeEmbeds:
             new_url = insensitive_instagram.sub("ddinstagram.com", instagram_url)
             new_url = new_url.split("/?")[0]
 
+        # For Bluesky
+        elif re.search(
+            r"(?P<url>bsky.app/[^\s]+)", text, re.IGNORECASE
+        ) and not re.search(r"(?P<url>psky.app[^\s]+)", text, re.IGNORECASE):
+            # Isolate the bsky URL.
+            bsky_url = str(
+                re.search(r"(?P<url>([^\s]*?)bsky[^\s]+)", text, re.IGNORECASE).group(
+                    "url"
+                )
+            )
+            insensitive_tiktok = re.compile(re.escape("bsky.app"), re.IGNORECASE)
+            new_url = insensitive_tiktok.sub("psky.app", bsky_url)
+
         return new_url
 
 
