@@ -6,9 +6,14 @@ from dotenv import load_dotenv
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
 from embeds_bot.gimme_embeds import GimmeEmbeds
+from embeds_bot.gimme_db import GimmeDB
 
 load_dotenv()
-ge = GimmeEmbeds()
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = os.getenv("REDIS_PORT")
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
+db = GimmeDB(REDIS_HOST, REDIS_PORT, REDIS_PASSWORD)
+ge = GimmeEmbeds(db=db)
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.DEBUG
@@ -20,7 +25,7 @@ dispatcher = updater.dispatcher
 
 
 def main():
-    """ Setup and run the bot."""
+    """Setup and run the bot."""
     # Handle the /start command.
     start_handler = CommandHandler("start", ge.start)
     dispatcher.add_handler(start_handler)
@@ -34,6 +39,9 @@ def main():
     dispatcher.add_handler(message_handler)
     # Handler to stop the bot
     dispatcher.add_handler(CommandHandler("r", ge.restart))
+
+    # Handler to filter and embed a website
+    dispatcher.add_handler(CommandHandler("embed", ge.filter_website))
 
     updater.start_polling()
 
