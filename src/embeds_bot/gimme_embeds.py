@@ -7,8 +7,9 @@ from threading import Thread
 
 class GimmeEmbeds:
     """Class to handle the bot's actions."""
-    def __init__(self, db): # pylint: disable=invalid-name
-        self.db = db # pylint: disable=invalid-name
+
+    def __init__(self, db):  # pylint: disable=invalid-name
+        self.db = db  # pylint: disable=invalid-name
 
     def start(self, update, context):
         """
@@ -54,8 +55,8 @@ class GimmeEmbeds:
         try:
             database = self.filter_db
         except AttributeError:
-            self.filter_db = self.db.get_db( # pylint: disable=attribute-defined-outside-init
-                chat_id
+            self.filter_db = (  # pylint: disable=attribute-defined-outside-init
+                self.db.get_db(chat_id)
             )
             database = self.filter_db
 
@@ -206,6 +207,6 @@ class GimmeEmbeds:
             )
             self.db.edit_db(chat_id, filtered_website, value)
             # Update the local dictionary from the database.
-            self.filter_db = self.db.get_db( # pylint: disable=attribute-defined-outside-init
-                chat_id
+            self.filter_db = (  # pylint: disable=attribute-defined-outside-init
+                self.db.get_db(chat_id)
             )

@@ -5,11 +5,18 @@ import redis
 class GimmeDB:
     """Class to handle the bot's database."""
 
-    def __init__(self, redis_host: str = None, redis_port: int = None, password: str = None):
+    def __init__(
+        self, redis_host: str = None, redis_port: int = None, password: str = None
+    ):
         self.redis_host = redis_host or "localhost"
         self.redis_port = redis_port or 6379
         self.redis_password = password or None
-        self.redis_db = redis.Redis(host=self.redis_host, port=self.redis_port, db=0, password=self.redis_password) # pylint: disable=line-too-long
+        self.redis_db = redis.Redis(
+            host=self.redis_host,
+            port=self.redis_port,
+            db=0,
+            password=self.redis_password,
+        )  # pylint: disable=line-too-long
 
     def create_db(self, chat_id):
         """Create a database for the chat."""
