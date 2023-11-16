@@ -85,6 +85,20 @@ class GimmeEmbeds:
             new_url = insensitive_twitter.sub("vxtwitter.com", twitter_url)
             new_url = new_url.split("?")[0]  # Remove trackers
 
+        elif (
+            re.search(r"(?P<url>x.com/(.*?)/[^\s]+)", text, re.IGNORECASE)
+            and database["twitter"] == "1"
+        ):
+            # Isolate the 𝕏, formerly known as Twitter, URL.
+            twitter_url = str(
+                re.search(r"(?P<url>([^\s]*?)x.com[^\s]+)", text, re.IGNORECASE).group(
+                    "url"
+                )
+            )
+            insensitive_twitter = re.compile(re.escape("x.com"), re.IGNORECASE)
+            new_url = insensitive_twitter.sub("vxtwitter.com", twitter_url)
+            new_url = new_url.split("?")[0]
+
         # For TikTok
         elif (
             re.search(r"(?P<url>tiktok.com/[^\s]+)", text, re.IGNORECASE)
