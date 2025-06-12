@@ -117,7 +117,7 @@ class GimmeEmbeds:
         # For Instagram
         elif (
             re.search(r"(?P<url>instagram.com/[^\s]+)", text, re.IGNORECASE)
-            and not re.search(r"(?P<url>ddinstagram.com[^\s]+)", text, re.IGNORECASE)
+            and not re.search(r"(?P<url>kkinstagram.com[^\s]+)", text, re.IGNORECASE)
             and database["instagram"] == "1"
         ):
             # Isolate the Instagram URL.
@@ -129,7 +129,7 @@ class GimmeEmbeds:
             insensitive_instagram = re.compile(
                 re.escape("instagram.com"), re.IGNORECASE
             )
-            new_url = insensitive_instagram.sub("ddinstagram.com", instagram_url)
+            new_url = insensitive_instagram.sub("kkinstagram.com", instagram_url)
             new_url = new_url.split("/?")[0]
 
         # For Bluesky
